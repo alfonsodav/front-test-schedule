@@ -39,22 +39,21 @@ export default function RegisterSchedule() {
     getEmployees();
   });
 
-  function handleSumit(e: any) {
+  async function handleSumit(e: any) {
     e.preventDefault();
-
+    
     // Read the form data
     const form = e.target;
     const formData = new FormData(form);
 
     // You can pass formData as a fetch body directly:
-    fetch('https://9z02mq6l-2426.brs.devtunnels.ms/schedules', {
+    const response =await fetch('https://9z02mq6l-2426.brs.devtunnels.ms/schedules', {
       method: form.method,
       body: formData,
     });
+    alert('success')
 
-    // Or you can work with it as a plain object:
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+    console.log('response', response);
   }
   function resetForm(e: any) {
     e.target.reset();
@@ -62,7 +61,7 @@ export default function RegisterSchedule() {
 
   return (
     <form
-      className="col content-center mx-5 px-5"
+      className="col content-center mx-5 px-5 needs-validation"
       method="post"
       onSubmit={handleSumit}
       onReset={resetForm}
@@ -71,22 +70,22 @@ export default function RegisterSchedule() {
       <label className="form-label" htmlFor="inputName">
         Employee
       </label>
-      <select className="form-select" name="employeeId" id="inputName">
+      <select className="form-select" name="employeeId" id="inputName" required>
         {OptionsEmployees}
       </select>
 
       <label className="form-label" htmlFor="inputName">
         Work Date
       </label>
-      <input type="date" className="form-control" name="workDate" id="inputBirthdDate" />
+      <input type="date" className="form-control" name="workDate" id="inputBirthdDate" required />
       <label className="form-label" htmlFor="inputName">
         Start Time
       </label>
-      <input type="time" className="form-control" name="startTime" id="inputBirthdDate" />
+      <input type="time" className="form-control" name="startTime" id="inputBirthdDate" required />
       <label className="form-label" htmlFor="inputName">
         end Time
       </label>
-      <input type="time" className="form-control" name="endTime" id="inputBirthdDate" />
+      <input type="time" className="form-control" name="endTime" id="inputBirthdDate" required />
       <div className=" container-fluid d-flex my-5">
         <button className="btn btn-warning" type="reset">
           Clear
