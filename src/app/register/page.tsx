@@ -17,13 +17,16 @@ export default function RegisterEmployee() {
     const formJson = Object.fromEntries(formData.entries());
     console.log(formJson);
   }
+  function resetForm(e: any) {
+    e.target.reset();
+  }
   return (
     <form
       className="col content-center flex flex-col mx-5 px-5"
       method="post"
       onSubmit={handleSumit}
+      onReset={resetForm}
     >
-
       <div className="text-center my-3">Register Employee</div>
       <label className="form-label" htmlFor="inputDNI">
         Card ID
@@ -44,9 +47,14 @@ export default function RegisterEmployee() {
         bird date
       </label>
       <input type="date" className="form-control" name="birthDate" id="inputBirthdDate" />
-      <button className="btn btn-success my-5" type="submit">
-        Save Employee
-      </button>
+      <div className=" container-fluid d-flex my-5">
+        <button className="btn btn-warning" type="reset">
+          Clear
+        </button>
+        <button className="btn btn-success ms-5" type="submit">
+          Save Schedule
+        </button>
+      </div>
     </form>
   );
 }
