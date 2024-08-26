@@ -30,11 +30,20 @@ export const apiAxios = async (endpoint, options = {}) => {
       },
       ...options,
     });
-  } else if (
-    options.method.toUpperCase() === "POST" ||
-    options.method.toUpperCase() === "PUT"
-  ) {
+  } else if (options.method.toUpperCase() === "POST") {
     res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_HOST}${endpoint}`,
+      options.body,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+        ...options,
+      }
+    );
+  } else if (options.method.toUpperCase() === "PUT") {
+    res = await axios.put(
       `${process.env.NEXT_PUBLIC_API_HOST}${endpoint}`,
       options.body,
       {
@@ -47,11 +56,12 @@ export const apiAxios = async (endpoint, options = {}) => {
     );
   }
 
-  if (!res?.ok) {
+  console.log("API response", res);
+  if (res.status !== 200) {
     console.log("API error", res.response.data);
     throw new Error(res.response.data);
   }
 
-  const data = await res.json();
+  const data = await res.data;
   return data;
 };
